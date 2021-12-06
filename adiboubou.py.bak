@@ -224,10 +224,10 @@ liste_obstacles.append(Obstacle(False, False, True, False, False, "anne", (14, 9
 #liste_obstacles.append(Obstacle(False, False, False, True, False, False, "auriane", (7, 10)))
 
 # Good champi
-liste_obstacles.append(Obstacle(False, True, False, False, False, "good champi", (14, 9))) # marche pô
+liste_obstacles.append(Obstacle(False, True, False, False, False, "goodchampi", (14, 9)))
 
 # Bad champi
-liste_obstacles.append(Obstacle(True, False, False, False, False, "bad champi", (14, 9))) # marche pô
+liste_obstacles.append(Obstacle(True, False, False, False, False, "badchampi", (14, 9)))
 
 # Wall
 liste_obstacles.append(Obstacle(False, False, False, False, True, "wall", (5, 2)))
@@ -321,10 +321,6 @@ liste_obstacles.append(Obstacle(False, False, False, False, True, "wall", (17, 1
 
 liste_obstacles.append(Obstacle(False, False, False, True, False, "wall", (11, 7)))
 liste_obstacles.append(Obstacle(False, False, False, True, False, "wall", (5, 11)))
-
-
-
-
 
 
 for i in range(len(liste_blocs)):
