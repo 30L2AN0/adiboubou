@@ -4,7 +4,7 @@ taille = 40
 liste_blocs = []
 liste_obstacles = []
 liste_regles = []
-grille = [[None for j in range(640//taille)] for i in range(1200//taille)]
+grille = [[None for j in range(600//taille)] for i in range(1200//taille)]
 
 class Obstacle:
     def __init__(self, mot, position):
