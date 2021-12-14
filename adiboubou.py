@@ -11,7 +11,7 @@ from regles import *
 exec(open("regles.py").read())
 from rewind import *
 exec(open("rewind.py").read())
-from clipped import *
+# from graphismes import *
 exec(open("graphismes.py").read())
 
 #on met à jour les listes en fonction de la map choisie
