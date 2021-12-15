@@ -59,7 +59,7 @@ def bas(event):
 
 def revenir_temps(event):
     global liste_regles, liste_blocs, liste_obstacles, liste_liste_objets, grille, images_blocs, images_obstacles
-    grille, images_blocs, images_obstacles = afficher_grille_rewind(liste_blocs, liste_obstacles, images_blocs, images_obstacles, liste_liste_objets)
+    grille, images_blocs, images_obstacles = afficher_grille_rewind(liste_regles, liste_blocs, liste_obstacles, images_blocs, images_obstacles, liste_liste_objets)
     liste_blocs, liste_obstacles = rewind(liste_liste_objets, liste_blocs, liste_obstacles)
     liste_regles, images_obstacles = nouvelles_regles(liste_blocs, images_obstacles)
 
