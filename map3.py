@@ -122,3 +122,10 @@ liste_obstacles.append(Obstacle("wall", (14, 9)))
 
 liste_obstacles.append(Obstacle("grass", (13, 8)))
 
+#test
+liste_blocs.append(Bloc("verb", "IS", "is", (11, 2)))
+liste_blocs.append(Bloc("adj", "HOT", "hot", (12, 2)))
+liste_blocs.append(Bloc("noun", "GRASS", "grass", (11, 0)))
+liste_blocs.append(Bloc("verb", "IS", "is", (12, 0)))
+liste_blocs.append(Bloc("adj", "WEAK", "weak", (13, 0)))
+

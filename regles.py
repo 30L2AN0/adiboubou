@@ -115,6 +115,28 @@ def prochain_bloc_mort(k, l, l2):
                     return True
     return False
 
+def condition_melt_hot(g, l, l2, i1, i2, t):
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs1 = l2[g[i1][i2][1]]
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                for regle1 in l:
+                    for regle2 in l:
+                        if regle1.startswith(obs1.mot) and regle1.endswith("is hot") and regle2.startswith(obs2.mot) and regle2.endswith("is melt") or regle1.startswith(obs2.mot) and regle1.endswith("is hot") and regle2.startswith(obs1.mot) and regle2.endswith("is melt"):
+                            return True
+    return False
+
+def indice_melt_hot(g, l, l2, i1, i2, t):
+    obs1 = l2[g[i1][i2][1]]
+    obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+    for regle1 in l:
+        for regle2 in l:
+            if regle1.startswith(obs1.mot) and regle1.endswith("is hot") and regle2.startswith(obs2.mot) and regle2.endswith("is melt"):
+                return i1+t[0], i2+t[1]
+    return i1, i2
+
+
 def prochain_bloc_win(k, l, l2):
     if k != None:
         element, indice = k
@@ -122,6 +144,17 @@ def prochain_bloc_win(k, l, l2):
             for condition in l:
                 if condition.startswith(l2[indice].mot) and condition.endswith("is win"):
                     return True
+    return False
+
+def condition_weak(g, l, l2, i1, i2, t):
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs1 = l2[g[i1][i2][1]]
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                for regle1 in l:
+                    if pushable(obs1, l) and regle1.startswith(obs1.mot) and regle1.endswith("is weak") and not pushable(obs2, l):
+                            return True
     return False
 
 def condition_open_shut(g, l, l2, i1, i2, t):
@@ -158,11 +191,11 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
             else:
                 ind1, ind2 = obstacle.position
                 liste_apres = []
-                while ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t):
+                while ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                     ind1 += t[0]
                     ind2 += t[1]
-                if condition_open_shut(g, l, l2, ind1, ind2, t):
+                if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                 if ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0:
                     poussable = True
@@ -182,6 +215,13 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                                     if condition_open_shut(g, l, l2, ind1, ind2, t):
                                         l2[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
                                         l2[g[ind1][ind2][1]].position = (-1,-1)
+                                    elif condition_weak(g, l, l2, ind1, ind2, t):
+                                        l2[g[ind1][ind2][1]].position = (-1,-1)
+                                    elif condition_melt_hot(g, l, l2, ind1, ind2, t):
+                                        a1, a2 = indice_melt_hot(g, l, l2, ind1, ind2, t)
+                                        l2[g[a1][a2][1]].position = (-1,-1)
+                                        if a1 != ind1 or a2 != ind2:
+                                            l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
                                     else:
                                         l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
                                 if element[0] == "bloc":

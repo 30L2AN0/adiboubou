@@ -11,13 +11,15 @@ from regles import *
 exec(open("regles.py").read())
 
 top = Tk()
-C = Canvas(top,height = 640, width = 1200, background = "#f12344")
+C = Canvas(top,height = 640, width = 1200)
 
 C.pack()
 top.title("Anne is stone")
 
 path = "clipped/"
 
+image_champi_background = ImageTk.PhotoImage(Image.open(path+"champi_background2.jpg").resize((1200, 640), Image.ANTIALIAS), master = top)
+C.create_image(0, 0, anchor = NW, image = image_champi_background)
 image_anne = ImageTk.PhotoImage(Image.open(path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_anne = ImageTk.PhotoImage(Image.open(path+"blue_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_wall = ImageTk.PhotoImage(Image.open(path+"wall2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -42,6 +44,7 @@ def update_grille(l1,l2):
     return nouv_grille
 
 def afficher_grille0(l1, l2):
+    global liste_regles
     im1 = []
     im2 = []
     g = update_grille(l1, l2)
@@ -128,9 +131,10 @@ def afficher_grille(l1, l2, im1, im2, liste_obj, actualise):
                 C.move(im2[j], diff_pos[0]*taille, diff_pos[1]*taille)
     return g, im1, im2
 
-def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
+def afficher_grille_rewind(l, l1, l2, im1, im2, liste_obj):
     g = update_grille(l1, l2)
     if len(liste_obj) > 1:
+        list_l2 = liste_obj[-2][1]
         for i in range(len(l1)):
             diff_pos = (l1[i].position[0]-liste_obj[-2][0][i].position[0],l1[i].position[1]-liste_obj[-2][0][i].position[1])
             if diff_pos != (0,0):
@@ -139,4 +143,33 @@ def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
             diff_pos = (l2[j].position[0]-liste_obj[-2][1][j].position[0],l2[j].position[1]-liste_obj[-2][1][j].position[1])
             if diff_pos != (0,0):
                 C.move(im2[j], -diff_pos[0]*taille, -diff_pos[1]*taille)
+            if list_l2[j].mot == "anne":
+                if "anne is blue" in l:
+                    C.itemconfig(im2[j], image = image_blue_anne)
+                elif "anne is goodchampi" in l:
+                    C.itemconfig(im2[j], image = image_good_champi_anne)
+                else:
+                    C.itemconfig(im2[j], image = image_anne)
+            if list_l2[j].mot == "auriane":
+                if "auriane is blue" in l:
+                    C.itemconfig(im2[j], image = image_blue_auriane)
+                else:
+                    C.itemconfig(im2[j], image = image_auriane)
+            if list_l2[j].mot == "grass":
+                if "grass is blue" in l:
+                    C.itemconfig(im2[j], image = image_real_blue_grass)
+                else:
+                    C.itemconfig(im2[j], image = image_grass)
+            if list_l2[j].mot == "wall":
+                if "wall is blue" in l:
+                    C.itemconfig(im2[j], image = image_wall)
+                else:
+                    C.itemconfig(im2[j], image = image_wall)
+            if list_l2[j].mot == "bad champi":
+                if "badchampi is blue" in l:
+                    C.itemconfig(im2[j], image = image_blue_bad_champi)
+                else:
+                    C.itemconfig(im2[j], image = image_bad_champi)
+            if list_l2[j].mot == "good champi":
+                C.itemconfig(im2[j], image = image_good_champi)
     return g, im1, im2
