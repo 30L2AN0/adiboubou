@@ -169,6 +169,16 @@ def condition_open_shut(g, l, l2, i1, i2, t):
                             return True
     return False
 
+def condition_weak_text(g, l, l1, l2, i1, i2, t):
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
+            if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs1 = l1[g[i1][i2][1]]
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                for regle1 in l:
+                    if regle1 == "text is weak" and not pushable(obs2, l):
+                            return True
+    return False
 
 def check_deplacement(t, l, l1, l2, g, liste_obj):
     actu = False
@@ -191,11 +201,11 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
             else:
                 ind1, ind2 = obstacle.position
                 liste_apres = []
-                while ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t):
+                while ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                     ind1 += t[0]
                     ind2 += t[1]
-                if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t):
+                if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t) or condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                 if ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0:
                     poussable = True
@@ -225,7 +235,10 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                                     else:
                                         l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
                                 if element[0] == "bloc":
-                                    l1[element[1]].set((l1[element[1]].position[0]+t[0],l1[element[1]].position[1]+t[1]))
+                                    if condition_weak_text(g, l, l1, l2, ind1, ind2, t):
+                                        l1[g[ind1][ind2][1]].position = (-1,-1)
+                                    else:
+                                        l1[element[1]].set((l1[element[1]].position[0]+t[0],l1[element[1]].position[1]+t[1]))
                         actu = True
     if actu:
         liste_obj.append((copy_blocs(l1), copy_obstacles(l2)))

@@ -15,8 +15,8 @@ from graphismes import *
 exec(open("graphismes.py").read())
 
 #on met à jour les listes en fonction de la map choisie
-from map3 import *
-exec(open("map3.py").read())
+from map2 import *
+exec(open("map2.py").read())
 
 liste_liste_objets = [(copy_blocs(liste_blocs), copy_obstacles(liste_obstacles))]
 grille, images_blocs, images_obstacles = afficher_grille0(liste_blocs, liste_obstacles)
