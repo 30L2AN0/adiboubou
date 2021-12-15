@@ -18,7 +18,7 @@ top.title("Anne is stone")
 
 path = "clipped/"
 
-image_champi_background = ImageTk.PhotoImage(Image.open(path+"champi_background2.jpg").resize((1200, 640), Image.ANTIALIAS), master = top)
+image_champi_background = ImageTk.PhotoImage(Image.open(path+"champi_background4.jpg").resize((1200, 640), Image.ANTIALIAS), master = top)
 C.create_image(0, 0, anchor = NW, image = image_champi_background)
 image_anne = ImageTk.PhotoImage(Image.open(path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_anne = ImageTk.PhotoImage(Image.open(path+"blue_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
