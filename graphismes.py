@@ -25,14 +25,14 @@ image_blue_anne = ImageTk.PhotoImage(Image.open(path+"blue_anne.png").resize((ta
 image_wall = ImageTk.PhotoImage(Image.open(path+"wall2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_grass = ImageTk.PhotoImage(Image.open(path+"grass2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_bad_champi = ImageTk.PhotoImage(Image.open(path+"bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_good_champi = ImageTk.PhotoImage(Image.open(path+"champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_good_champi = ImageTk.PhotoImage(Image.open(path+"good_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_auriane = ImageTk.PhotoImage(Image.open(path+"auriane.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_auriane = ImageTk.PhotoImage(Image.open(path+"blue_auriane.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_bad_champi = ImageTk.PhotoImage(Image.open(path+"blue_bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_wall = ImageTk.PhotoImage(Image.open(path+"blue_wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_DUH = ImageTk.PhotoImage(Image.open(path+"DUH.png").resize((1200,640), Image.ANTIALIAS), master = top)
 image_good_champi_anne = ImageTk.PhotoImage(Image.open(path+"good_champi_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_real_blue_grass = ImageTk.PhotoImage(Image.open(path+"real_blue_grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_real_blue_grass = ImageTk.PhotoImage(Image.open(path+"blue_grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_victory = ImageTk.PhotoImage(Image.open(path+"victory.png").resize((1200,640), Image.ANTIALIAS), master = top)
 
 def update_grille(l1,l2):
