@@ -3,7 +3,7 @@ exec(open("__init__.py").read())
 
 global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, liste_noun, liste_adj
 
-liste_noun = ["good champi", "auriane", "anne", "bad champi", "wall", "grass", "door"]
+liste_noun = ["auriane", "anne", "good champi", "bad champi", "wall", "grass", "door"]
 liste_adj = ["open", "shut", "greener", "stop", "push", "blue"]
 
 def distance(X,Y):

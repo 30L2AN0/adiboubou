@@ -28,9 +28,7 @@ liste_blocs.append(Bloc("noun", "    BAD\nCHAMPI", "bad champi", (7,10)))
 liste_blocs.append(Bloc("verb", "IS", "is", (7,11)))
 liste_blocs.append(Bloc("adj", "SHUT", "shut", (7,12)))
 
-#liste_blocs.append(Bloc("noun", "ANNE", "anne", (15,4)))
-#liste_blocs.append(Bloc("noun", "ANNE", "anne", (17,4)))
-#liste_blocs.append(Bloc("verb", "IS", "is", (16,4)))
+
 liste_blocs.append(Bloc("noun", "   GOOD\nCHAMPI", "good champi", (17,5)))
 liste_blocs.append(Bloc("verb", "IS", "is", (17,6)))
 liste_blocs.append(Bloc("adj", "OPEN", "open", (17,7)))

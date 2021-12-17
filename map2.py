@@ -11,7 +11,7 @@ liste_blocs.append(Bloc("noun", "ANNE", "anne", (19, 12)))
 liste_blocs.append(Bloc("noun", "AURIANE", "auriane", (18, 8)))
 # GOOD CHAMPI
 liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (7, 12)))
-liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (26, 0)))
+liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (27, 0)))
 # BAD CHAMPI
 liste_blocs.append(Bloc("noun", "   BAD\nCHAMPI", "bad champi", (5, 7)))
 # WALL
@@ -35,13 +35,13 @@ liste_blocs.append(Bloc("verb", "IS", "is", (20, 12)))
 liste_blocs.append(Bloc("verb", "IS", "is", (8, 13)))
 liste_blocs.append(Bloc("verb", "IS", "is", (14, 14)))
 liste_blocs.append(Bloc("verb", "IS", "is", (5, 8)))
-liste_blocs.append(Bloc("verb", "IS", "is", (27, 0)))
+liste_blocs.append(Bloc("verb", "IS", "is", (28, 0)))
 
 # YOU
 liste_blocs.append(Bloc("adj", "YOU", "you", (21, 12)))
 # PUSH
 liste_blocs.append(Bloc("adj", "PUSH", "push", (19, 9)))
-liste_blocs.append(Bloc("adj", "PUSH", "push", (28, 0)))
+liste_blocs.append(Bloc("adj", "PUSH", "push", (29, 0)))
 # STOP
 liste_blocs.append(Bloc("adj", "STOP", "stop", (15, 14)))
 # SHUT
