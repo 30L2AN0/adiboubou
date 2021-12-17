@@ -17,7 +17,8 @@ C.pack()
 top.title("Anne is stone")
 
 images_path = "images/"
-texts_path = "texts/"
+normal_texts_path = "texts/normal/"
+inverted_texts_path = "texts/inverted/"
 backgrounds_path = "backgrounds/"
 
 # images_champi_background = ImageTk.PhotoImage(Image.open(images_path+"champi_background4.jpg").resize((1200, 680), Image.ANTIALIAS), master = top)
@@ -29,7 +30,7 @@ C.create_image(0, 0, anchor = NW, image = clipped_fall_background)
 image_anne = ImageTk.PhotoImage(Image.open(images_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_anne = ImageTk.PhotoImage(Image.open(images_path+"blue_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_wall = ImageTk.PhotoImage(Image.open(images_path+"wall2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_grass = ImageTk.PhotoImage(Image.open(images_path+"grass2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_grass = ImageTk.PhotoImage(Image.open(images_path+"grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_bad_champi = ImageTk.PhotoImage(Image.open(images_path+"bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_good_champi = ImageTk.PhotoImage(Image.open(images_path+"good_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_auriane = ImageTk.PhotoImage(Image.open(images_path+"auriane.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -43,27 +44,28 @@ image_door = ImageTk.PhotoImage(Image.open(images_path+"door.png").resize((taill
 image_blue_door = ImageTk.PhotoImage(Image.open(images_path+"blue_door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_grass = ImageTk.PhotoImage(Image.open(images_path+"blue_grass2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 
-text_anne = ImageTk.PhotoImage(Image.open(texts_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_wall = ImageTk.PhotoImage(Image.open(texts_path+"wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_grass = ImageTk.PhotoImage(Image.open(texts_path+"grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_bad_champi = ImageTk.PhotoImage(Image.open(texts_path+"bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_good_champi = ImageTk.PhotoImage(Image.open(texts_path+"good_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_aurianne = ImageTk.PhotoImage(Image.open(texts_path+"aurianne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_door = ImageTk.PhotoImage(Image.open(texts_path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_open = ImageTk.PhotoImage(Image.open(texts_path+"open.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_hot = ImageTk.PhotoImage(Image.open(texts_path+"hot.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_stop = ImageTk.PhotoImage(Image.open(texts_path+"stop.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_text = ImageTk.PhotoImage(Image.open(texts_path+"text.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_is = ImageTk.PhotoImage(Image.open(texts_path+"is.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_death = ImageTk.PhotoImage(Image.open(texts_path+"death.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_shut = ImageTk.PhotoImage(Image.open(texts_path+"shut.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_melt = ImageTk.PhotoImage(Image.open(texts_path+"melt.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_win = ImageTk.PhotoImage(Image.open(texts_path+"win.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_greener = ImageTk.PhotoImage(Image.open(texts_path+"greener.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_blue = ImageTk.PhotoImage(Image.open(texts_path+"blue.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_push = ImageTk.PhotoImage(Image.open(texts_path+"push.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_weak = ImageTk.PhotoImage(Image.open(texts_path+"weak.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-text_you = ImageTk.PhotoImage(Image.open(texts_path+"you.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_anne = ImageTk.PhotoImage(Image.open(normal_texts_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_wall = ImageTk.PhotoImage(Image.open(normal_texts_path+"wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_grass = ImageTk.PhotoImage(Image.open(normal_texts_path+"grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_bad_champi = ImageTk.PhotoImage(Image.open(normal_texts_path+"bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_good_champi = ImageTk.PhotoImage(Image.open(normal_texts_path+"good_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_aurianne = ImageTk.PhotoImage(Image.open(normal_texts_path+"aurianne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_door = ImageTk.PhotoImage(Image.open(normal_texts_path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_text = ImageTk.PhotoImage(Image.open(normal_texts_path+"text.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_is = ImageTk.PhotoImage(Image.open(normal_texts_path+"is.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+
+text_open = ImageTk.PhotoImage(Image.open(inverted_texts_path+"open.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_hot = ImageTk.PhotoImage(Image.open(inverted_texts_path+"hot.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_stop = ImageTk.PhotoImage(Image.open(inverted_texts_path+"stop.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_death = ImageTk.PhotoImage(Image.open(inverted_texts_path+"death.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_shut = ImageTk.PhotoImage(Image.open(inverted_texts_path+"shut.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_melt = ImageTk.PhotoImage(Image.open(inverted_texts_path+"melt.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_win = ImageTk.PhotoImage(Image.open(inverted_texts_path+"win.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_greener = ImageTk.PhotoImage(Image.open(inverted_texts_path+"greener.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_blue = ImageTk.PhotoImage(Image.open(inverted_texts_path+"blue.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_push = ImageTk.PhotoImage(Image.open(inverted_texts_path+"push.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_weak = ImageTk.PhotoImage(Image.open(inverted_texts_path+"weak.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+text_you = ImageTk.PhotoImage(Image.open(inverted_texts_path+"you.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 
 def update_grille(l1,l2):
     nouv_grille = [[None for j in range(680//taille)] for i in range(1200//taille)]
