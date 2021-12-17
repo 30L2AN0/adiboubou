@@ -34,6 +34,10 @@ image_DUH = ImageTk.PhotoImage(Image.open(path+"DUH.png").resize((1200,640), Ima
 image_good_champi_anne = ImageTk.PhotoImage(Image.open(path+"good_champi_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_real_blue_grass = ImageTk.PhotoImage(Image.open(path+"blue_grass.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_victory = ImageTk.PhotoImage(Image.open(path+"victory.png").resize((1200,640), Image.ANTIALIAS), master = top)
+image_door = ImageTk.PhotoImage(Image.open(path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_blue_door = ImageTk.PhotoImage(Image.open(path+"blue_door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_door = ImageTk.PhotoImage(Image.open(path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
+image_blue_grass = ImageTk.PhotoImage(Image.open(path+"blue_grass2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 
 def update_grille(l1,l2):
     nouv_grille = [[None for j in range(640//taille)] for i in range(1200//taille)]
@@ -82,34 +86,39 @@ def afficher_grille0(l1, l2):
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_bad_champi)
         if obstacles.mot == "good champi":
             k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_good_champi)
+        if obstacles.mot == "door":
+            if "door is blue" in liste_regles:
+                    k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_door)
+            else:
+                k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_door)
         im2.append(k)
     return g, im1, im2
 
-def nouvelle_grille_is(obs, ind, im2):
+def nouvelle_grille_is(l, obs, ind, im2):
     if obs.mot == "anne":
-        if "anne is blue" in liste_regles:
+        if "anne is blue" in l:
             C.itemconfig(im2[ind], image = image_blue_anne)
-        elif "anne is goodchampi" in liste_regles:
+        elif "anne is goodchampi" in l:
             C.itemconfig(im2[ind], image = image_good_champi_anne)
         else:
             C.itemconfig(im2[ind], image = image_anne)
     if obs.mot == "auriane":
-        if "auriane is blue" in liste_regles:
+        if "auriane is blue" in l:
             C.itemconfig(im2[ind], image = image_blue_auriane)
         else:
             C.itemconfig(im2[ind], image = image_auriane)
     if obs.mot == "grass":
-        if "grass is blue" in liste_regles:
-            C.itemconfig(im2[ind], image = image_real_blue_grass)
+        if "grass is blue" in l:
+            C.itemconfig(im2[ind], image = image_blue_grass)
         else:
             C.itemconfig(im2[ind], image = image_grass)
     if obs.mot == "wall":
-        if "wall is blue" in liste_regles:
+        if "wall is blue" in l:
             C.itemconfig(im2[ind], image = image_wall)
         else:
             C.itemconfig(im2[ind], image = image_wall)
     if obs.mot == "bad champi":
-        if "badchampi is blue" in liste_regles:
+        if "badchampi is blue" in l:
             C.itemconfig(im2[ind], image = image_blue_bad_champi)
         else:
             C.itemconfig(im2[ind], image = image_bad_champi)
@@ -131,10 +140,12 @@ def afficher_grille(l1, l2, im1, im2, liste_obj, actualise):
                 C.move(im2[j], diff_pos[0]*taille, diff_pos[1]*taille)
     return g, im1, im2
 
-def afficher_grille_rewind(l, l1, l2, im1, im2, liste_obj):
+def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
     g = update_grille(l1, l2)
     if len(liste_obj) > 1:
+        list_l1 = liste_obj[-2][0]
         list_l2 = liste_obj[-2][1]
+        l, im2 = nouvelles_regles(list_l1, im2)
         for i in range(len(l1)):
             diff_pos = (l1[i].position[0]-liste_obj[-2][0][i].position[0],l1[i].position[1]-liste_obj[-2][0][i].position[1])
             if diff_pos != (0,0):
@@ -157,7 +168,7 @@ def afficher_grille_rewind(l, l1, l2, im1, im2, liste_obj):
                     C.itemconfig(im2[j], image = image_auriane)
             if list_l2[j].mot == "grass":
                 if "grass is blue" in l:
-                    C.itemconfig(im2[j], image = image_real_blue_grass)
+                    C.itemconfig(im2[j], image = image_blue_grass)
                 else:
                     C.itemconfig(im2[j], image = image_grass)
             if list_l2[j].mot == "wall":
@@ -172,4 +183,9 @@ def afficher_grille_rewind(l, l1, l2, im1, im2, liste_obj):
                     C.itemconfig(im2[j], image = image_bad_champi)
             if list_l2[j].mot == "good champi":
                 C.itemconfig(im2[j], image = image_good_champi)
+            if list_l2[j].mot == "door":
+                if "door is blue" in l:
+                    C.itemconfig(im2[j], image = image_blue_door)
+                else:
+                    C.itemconfig(im2[j], image = image_door)
     return g, im1, im2

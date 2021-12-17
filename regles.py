@@ -3,8 +3,8 @@ exec(open("__init__.py").read())
 
 global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, liste_noun, liste_adj
 
-liste_noun = ["good champi", "auriane", "anne", "bad champi", "wall", "grass"]
-liste_adj = ["open", "shut", "greener", "stop", "push"]
+liste_noun = ["good champi", "auriane", "anne", "bad champi", "wall", "grass", "door"]
+liste_adj = ["open", "shut", "greener", "stop", "push", "blue"]
 
 def distance(X,Y):
     return abs(X[0]-Y[0])+2*abs(X[1]-Y[1])
@@ -84,7 +84,7 @@ def nouvelles_regles(l, im2):
     return nouvelle_liste_regles, im2
 
 def appliquer_nouvelles_regles(l, l2, im2):
-    for i in range(4):
+    if len(im2) > 0:
         for regle in l:
             x = regle.split(" ")
             for i in range(len(x)):
@@ -93,7 +93,11 @@ def appliquer_nouvelles_regles(l, l2, im2):
                         for ind in range(len(l2)):
                             if " ".join(x[:i]) == l2[ind].mot:
                                 l2[ind].mot = " ".join(x[i+1:])
-                                im2 = nouvelle_grille_is(l2[ind], ind, im2)
+                                im2 = nouvelle_grille_is(l, l2[ind], ind, im2)
+                    if " ".join(x[i+1:]) == "blue":
+                        for ind in range(len(l2)):
+                            if " ".join(x[:i]) == l2[ind].mot:
+                                im2 = nouvelle_grille_is(l, l2[ind], ind, im2)
     return l2, im2
 
 
@@ -247,18 +251,27 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
 
 
 
-def checker_regles(l):
+def checker_regles(l, im):
     regle_you = []
     for regle in l:
         if regle.endswith("is you"):
             regle_you.append(regle[:-7])
     if regle_you == []:
         return False
+    if "bad champi is stop" in l and len(im) == 0:
+        k = C.create_image(0,0, anchor = NW, image = image_victory)
+        images_autres.append(k)
     if "bad champi is stop" in l:
-        C.create_image(0,0, anchor = NW, image = image_victory)
         return False
+    if "grass is greener" in l and len(im) == 0:
+        k = C.create_image(0,0, anchor = NW, image = image_DUH)
+        images_autres.append(k)
     if "grass is greener" in l:
-        C.create_image(0,0, anchor = NW, image = image_DUH)
         return False
+    print(len(im))
+    for k in im:
+        C.delete(k)
+        im.remove(k)
+    im = []
     return True
 

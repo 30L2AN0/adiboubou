@@ -12,9 +12,6 @@ liste_blocs.append(bloc)
 #bloc = Bloc(False, True, False, "    BAD\nCHAMPIS", "badchampi", (2,1))
 #liste_blocs.append(bloc)
 
-liste_blocs.append(Bloc("noun", "   GOOD\nCHAMPI", "good champi", (2,7)))
-liste_blocs.append(Bloc("verb", "IS", "is", (2,8)))
-liste_blocs.append(Bloc("adj", "YOU", "you", (2,9)))
 liste_blocs.append(Bloc("noun", "ANNE", "anne", (5,4)))
 liste_blocs.append(Bloc("adj", "YOU", "you", (7,4)))
 liste_blocs.append(Bloc("verb", "IS", "is", (6,4)))
@@ -34,9 +31,7 @@ liste_blocs.append(Bloc("adj", "SHUT", "shut", (7,12)))
 #liste_blocs.append(Bloc("noun", "ANNE", "anne", (15,4)))
 #liste_blocs.append(Bloc("noun", "ANNE", "anne", (17,4)))
 #liste_blocs.append(Bloc("verb", "IS", "is", (16,4)))
-liste_blocs.append(Bloc("noun", "ANNE", "anne", (15,5)))
 liste_blocs.append(Bloc("noun", "   GOOD\nCHAMPI", "good champi", (17,5)))
-liste_blocs.append(Bloc("verb", "IS", "is", (16,5)))
 liste_blocs.append(Bloc("verb", "IS", "is", (17,6)))
 liste_blocs.append(Bloc("adj", "OPEN", "open", (17,7)))
 
@@ -51,7 +46,7 @@ liste_obstacles.append(Obstacle("grass", (1,2)))
 liste_obstacles.append(Obstacle("grass", (1,3)))
 
 
-for j in range(15):
+for j in range(16):
     for i in range(22-j//2, 25-j//2):
         liste_obstacles.append(Obstacle("grass", (i,j)))
 
