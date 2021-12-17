@@ -268,7 +268,6 @@ def checker_regles(l, im):
         images_autres.append(k)
     if "grass is greener" in l:
         return False
-    print(len(im))
     for k in im:
         C.delete(k)
         im.remove(k)
