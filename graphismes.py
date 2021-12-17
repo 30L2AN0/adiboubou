@@ -11,7 +11,7 @@ from regles import *
 exec(open("regles.py").read())
 
 top = Tk()
-C = Canvas(top,height = 640, width = 1200)
+C = Canvas(top,height = 680, width = 1200)
 
 C.pack()
 top.title("Anne is stone")
@@ -20,10 +20,10 @@ images_path = "images/"
 texts_path = "texts/"
 backgrounds_path = "backgrounds/"
 
-# images_champi_background = ImageTk.PhotoImage(Image.open(images_path+"champi_background4.jpg").resize((1200, 640), Image.ANTIALIAS), master = top)
-# background_fall_brown = ImageTk.PhotoImage(Image.open(backgrounds_path+"brown_from_fall.png").resize((1200, 640), Image.ANTIALIAS), master = top)
-# fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"fall-baba_is_you.png").resize((1200, 640), Image.ANTIALIAS), master = top)
-clipped_fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"clipped_fall-baba_is_you.png").resize((1200, 640), Image.ANTIALIAS), master = top)
+# images_champi_background = ImageTk.PhotoImage(Image.open(images_path+"champi_background4.jpg").resize((1200, 680), Image.ANTIALIAS), master = top)
+# background_fall_brown = ImageTk.PhotoImage(Image.open(backgrounds_path+"brown_from_fall.png").resize((1200, 680), Image.ANTIALIAS), master = top)
+# fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"fall-baba_is_you.png").resize((1200, 680), Image.ANTIALIAS), master = top)
+clipped_fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"clipped_fall-baba_is_you.png").resize((1200, 680), Image.ANTIALIAS), master = top)
 C.create_image(0, 0, anchor = NW, image = clipped_fall_background)
 
 image_anne = ImageTk.PhotoImage(Image.open(images_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -36,9 +36,9 @@ image_auriane = ImageTk.PhotoImage(Image.open(images_path+"auriane.png").resize(
 image_blue_auriane = ImageTk.PhotoImage(Image.open(images_path+"blue_auriane.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_bad_champi = ImageTk.PhotoImage(Image.open(images_path+"blue_bad_champi.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_wall = ImageTk.PhotoImage(Image.open(images_path+"blue_wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_DUH = ImageTk.PhotoImage(Image.open(images_path+"DUH.png").resize((1200,640), Image.ANTIALIAS), master = top)
+image_DUH = ImageTk.PhotoImage(Image.open(images_path+"DUH.png").resize((1200,680), Image.ANTIALIAS), master = top)
 image_good_champi_anne = ImageTk.PhotoImage(Image.open(images_path+"good_champi_anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_victory = ImageTk.PhotoImage(Image.open(images_path+"victory.png").resize((1200,640), Image.ANTIALIAS), master = top)
+image_victory = ImageTk.PhotoImage(Image.open(images_path+"victory.png").resize((1200,680), Image.ANTIALIAS), master = top)
 image_door = ImageTk.PhotoImage(Image.open(images_path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_door = ImageTk.PhotoImage(Image.open(images_path+"blue_door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_grass = ImageTk.PhotoImage(Image.open(images_path+"blue_grass2.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -66,7 +66,7 @@ text_weak = ImageTk.PhotoImage(Image.open(texts_path+"weak.png").resize((taille,
 text_you = ImageTk.PhotoImage(Image.open(texts_path+"you.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 
 def update_grille(l1,l2):
-    nouv_grille = [[None for j in range(640//taille)] for i in range(1200//taille)]
+    nouv_grille = [[None for j in range(680//taille)] for i in range(1200//taille)]
     for i in range(len(l1)):
         nouv_grille[l1[i].position[0]][l1[i].position[1]] = ("bloc", i)
     for j in range(len(l2)):

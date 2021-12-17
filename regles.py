@@ -120,7 +120,7 @@ def prochain_bloc_mort(k, l, l2):
     return False
 
 def condition_melt_hot(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l2[g[i1][i2][1]]
@@ -151,7 +151,7 @@ def prochain_bloc_win(k, l, l2):
     return False
 
 def condition_weak(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l2[g[i1][i2][1]]
@@ -162,7 +162,7 @@ def condition_weak(g, l, l2, i1, i2, t):
     return False
 
 def condition_open_shut(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l2[g[i1][i2][1]]
@@ -174,7 +174,7 @@ def condition_open_shut(g, l, l2, i1, i2, t):
     return False
 
 def condition_weak_text(g, l, l1, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 16 and i2+t[1] >= 0:
+    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l1[g[i1][i2][1]]
@@ -191,7 +191,7 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
         if regle.endswith("is you"):
             liste_you.append(regle[:-7])
     for obstacle in l2:
-        if obstacle.mot in liste_you and obstacle.position[0]+t[0] < 30 and obstacle.position[0]+t[0] >= 0 and obstacle.position[1]+t[1] < 16 and obstacle.position[1]+t[1] >= 0:
+        if obstacle.mot in liste_you and obstacle.position[0]+t[0] < 30 and obstacle.position[0]+t[0] >= 0 and obstacle.position[1]+t[1] < 17 and obstacle.position[1]+t[1] >= 0:
             if g[obstacle.position[0]+t[0]][obstacle.position[1]+t[1]] == None:
                 obstacle.set((obstacle.position[0]+t[0],obstacle.position[1]+t[1]))
                 actu = True
@@ -205,13 +205,13 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
             else:
                 ind1, ind2 = obstacle.position
                 liste_apres = []
-                while ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t):
+                while ind1 < 30 and ind1 >= 0 and ind2 < 17 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                     ind1 += t[0]
                     ind2 += t[1]
                 if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t) or condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
-                if ind1 < 30 and ind1 >= 0 and ind2 < 16 and ind2 >= 0:
+                if ind1 < 30 and ind1 >= 0 and ind2 < 17 and ind2 >= 0:
                     poussable = True
                     for tup_indice in liste_apres:
                         ind1, ind2 = tup_indice
