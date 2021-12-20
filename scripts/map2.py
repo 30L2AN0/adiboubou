@@ -32,6 +32,9 @@ liste_blocs.append(Bloc("verb", "IS", "is", (17, 4)))
 liste_blocs.append(Bloc("verb", "IS", "is", (6, 7)))
 liste_blocs.append(Bloc("verb", "IS", "is", (19, 8)))
 liste_blocs.append(Bloc("verb", "IS", "is", (20, 12)))
+#test
+liste_blocs.append(Bloc("verb", "IS", "is", (18, 11)))
+
 liste_blocs.append(Bloc("verb", "IS", "is", (8, 13)))
 liste_blocs.append(Bloc("verb", "IS", "is", (14, 14)))
 liste_blocs.append(Bloc("verb", "IS", "is", (5, 8)))

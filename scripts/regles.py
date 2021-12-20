@@ -158,7 +158,13 @@ def condition_weak(g, l, l2, i1, i2, t):
                 obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
                 for regle1 in l:
                     if pushable(obs1, l) and regle1.startswith(obs1.mot) and regle1.endswith("is weak") and not pushable(obs2, l):
-                            return True
+                        return True
+    else:
+        if g[i1][i2] != None:
+            obs1 = l2[g[i1][i2][1]]
+            for regle1 in l:
+                if pushable(obs1, l) and regle1.startswith(obs1.mot) and regle1.endswith("is weak"):
+                    return True
     return False
 
 def condition_open_shut(g, l, l2, i1, i2, t):
@@ -181,29 +187,38 @@ def condition_weak_text(g, l, l1, l2, i1, i2, t):
                 obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
                 for regle1 in l:
                     if regle1 == "text is weak" and not pushable(obs2, l):
-                            return True
+                        return True
+    else:
+        if g[i1][i2] != None:
+            if g[i1][i2][0] == "bloc":
+                for regle1 in l:
+                    if regle1 == "text is weak":
+                        return True
     return False
 
 def check_deplacement(t, l, l1, l2, g, liste_obj):
     actu = False
     liste_you = []
+    deja_bouge_bloc = [False for i in range(len(l1))]
+    deja_bouge_obs = [False for i in range(len(l2))]
     for regle in l:
         if regle.endswith("is you"):
             liste_you.append(regle[:-7])
-    for obstacle in l2:
-        if obstacle.mot in liste_you and obstacle.position[0]+t[0] < 30 and obstacle.position[0]+t[0] >= 0 and obstacle.position[1]+t[1] < 17 and obstacle.position[1]+t[1] >= 0:
-            if g[obstacle.position[0]+t[0]][obstacle.position[1]+t[1]] == None:
-                obstacle.set((obstacle.position[0]+t[0],obstacle.position[1]+t[1]))
+    for obstacle in range(len(l2)):
+        if l2[obstacle].mot in liste_you and l2[obstacle].position[0]+t[0] < 30 and l2[obstacle].position[0]+t[0] >= 0 and l2[obstacle].position[1]+t[1] < 17 and l2[obstacle].position[1]+t[1] >= 0:
+            if g[l2[obstacle].position[0]+t[0]][l2[obstacle].position[1]+t[1]] == None and not deja_bouge_obs[obstacle]:
+                deja_bouge_obs[obstacle] = True
+                l2[obstacle].set((l2[obstacle].position[0]+t[0], l2[obstacle].position[1]+t[1]))
                 actu = True
-            elif prochain_bloc_mort(g[obstacle.position[0]+t[0]][obstacle.position[1]+t[1]], l, l2):
-                l2[g[obstacle.position[0]][obstacle.position[1]][1]].set((-1,-1))
+            elif prochain_bloc_mort(g[l2[obstacle].position[0]+t[0]][l2[obstacle].position[1]+t[1]], l, l2):
+                l2[obstacle].set((-1,-1))
                 actu = True
-            elif prochain_bloc_win(g[obstacle.position[0]+t[0]][obstacle.position[1]+t[1]], l, l2):
-                l2[g[obstacle.position[0]][obstacle.position[1]][1]].set((-1,-1))
+            elif prochain_bloc_win(g[l2[obstacle].position[0]+t[0]][l2[obstacle].position[1]+t[1]], l, l2):
+                l2[obstacle].set((-1,-1))
                 actu = True
                 C.create_image(0,0, anchor = NW, image = image_victory)
             else:
-                ind1, ind2 = obstacle.position
+                ind1, ind2 = l2[obstacle].position
                 liste_apres = []
                 while ind1 < 30 and ind1 >= 0 and ind2 < 17 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
@@ -225,7 +240,7 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                             ind1, ind2 = tup_ind
                             element = g[ind1][ind2]
                             if element != None:
-                                if element[0] == "obs" and ((not l2[element[1]].mot in liste_you) or l2[element[1]] == obstacle):
+                                if element[0] == "obs" and not deja_bouge_obs[element[1]]:
                                     if condition_open_shut(g, l, l2, ind1, ind2, t):
                                         l2[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
                                         l2[g[ind1][ind2][1]].position = (-1,-1)
@@ -238,11 +253,13 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                                             l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
                                     else:
                                         l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
-                                if element[0] == "bloc":
+                                        deja_bouge_obs[element[1]] = True
+                                if element[0] == "bloc" and not deja_bouge_bloc[element[1]]:
                                     if condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                                         l1[g[ind1][ind2][1]].position = (-1,-1)
                                     else:
                                         l1[element[1]].set((l1[element[1]].position[0]+t[0],l1[element[1]].position[1]+t[1]))
+                                        deja_bouge_bloc[element[1]] = True
                         actu = True
     if actu:
         liste_obj.append((copy_blocs(l1), copy_obstacles(l2)))

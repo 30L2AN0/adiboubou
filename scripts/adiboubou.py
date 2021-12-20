@@ -11,11 +11,11 @@ from regles import *
 exec(open("regles.py").read())
 from rewind import *
 exec(open("rewind.py").read())
+exec(open("rewind.py").read())
 exec(open("graphismes.py").read())
 
 #on met à jour les listes en fonction de la map choisie
-from map1 import *
-exec(open("map1.py").read())
+exec(open("map2.py").read())
 
 liste_liste_objets = [(copy_blocs(liste_blocs), copy_obstacles(liste_obstacles))]
 grille, images_blocs, images_obstacles = afficher_grille0(liste_blocs, liste_obstacles)
