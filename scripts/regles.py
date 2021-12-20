@@ -1,3 +1,5 @@
+#programmer sink, push, move, et régler problème couleur
+
 from __init__ import *
 exec(open("__init__.py").read())
 
@@ -80,10 +82,11 @@ def nouvelles_regles(l, im2):
                                 if y[:i] == x[:i] and " ".join(x[i+1:]) in liste_noun:
                                     if regle in nouvelle_liste_regles:
                                         nouvelle_liste_regles.remove(regle)
-    liste_obstacles, im2 = appliquer_nouvelles_regles(nouvelle_liste_regles, liste_obstacles, im2)
-    return nouvelle_liste_regles, im2
+    l, liste_obstacles, im2 = appliquer_nouvelles_regles(nouvelle_liste_regles, l, liste_obstacles, im2)
+    return l, nouvelle_liste_regles, im2
 
-def appliquer_nouvelles_regles(l, l2, im2):
+def appliquer_nouvelles_regles(l, l1, l2, im2):
+    global images_blocs
     if len(im2) > 0:
         for regle in l:
             x = regle.split(" ")
@@ -98,7 +101,14 @@ def appliquer_nouvelles_regles(l, l2, im2):
                         for ind in range(len(l2)):
                             if " ".join(x[:i]) == l2[ind].mot:
                                 im2 = nouvelle_grille_is(l, l2[ind], ind, im2)
-    return l2, im2
+                    if " ".join(x[:i]) in liste_noun and " ".join(x[i+1:]) == "text":
+                        for obs in l2:
+                            if " ".join(x[:i]) == obs.mot:
+                                l1.append(Bloc("noun", obs.mot, obs.position))
+                                images_blocs.append(ajout_affichage_bloc(l1[-1]))
+                                obs.position = (-1,-1)
+                                obs.mot = "rien"
+    return l1, l2, im2
 
 
 def pushable(ob, l):
@@ -262,7 +272,6 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                                         deja_bouge_bloc[element[1]] = True
                         actu = True
     if actu:
-        liste_obj.append((copy_blocs(l1), copy_obstacles(l2)))
         return 1
     return 0
 

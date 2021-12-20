@@ -6,64 +6,61 @@ global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_o
 
 
 # ANNE
-liste_blocs.append(Bloc("noun", "ANNE", "anne", (19, 12)))
+liste_blocs.append(Bloc("noun", "anne", (19, 12)))
 # AURIANE
-liste_blocs.append(Bloc("noun", "AURIANE", "auriane", (18, 8)))
+liste_blocs.append(Bloc("noun", "auriane", (18, 8)))
 # GOOD CHAMPI
-liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (7, 12)))
-liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (27, 0)))
+liste_blocs.append(Bloc("noun", "good champi", (7, 12)))
+liste_blocs.append(Bloc("noun", "good champi", (27, 0)))
 # BAD CHAMPI
-liste_blocs.append(Bloc("noun", "   BAD\nCHAMPI", "bad champi", (5, 7)))
+liste_blocs.append(Bloc("noun", "bad champi", (5, 7)))
 # WALL
-liste_blocs.append(Bloc("noun", "WALL", "wall", (13, 14)))
+liste_blocs.append(Bloc("noun", "wall", (13, 14)))
 # GRASS
-liste_blocs.append(Bloc("noun", "GRASS", "grass", (16, 4)))
+liste_blocs.append(Bloc("noun", "grass", (16, 4)))
 # TEXT
-liste_blocs.append(Bloc("noun", "TEXT", "text", (19, 7)))
+liste_blocs.append(Bloc("noun", "text", (19, 7)))
 # DOOR
-liste_blocs.append(Bloc("noun", "DOOR", "door", (0, 0)))
+liste_blocs.append(Bloc("noun", "door", (0, 0)))
 
 
 
 
 # IS
-liste_blocs.append(Bloc("verb", "IS", "is", (1, 0)))
-liste_blocs.append(Bloc("verb", "IS", "is", (17, 4)))
-liste_blocs.append(Bloc("verb", "IS", "is", (6, 7)))
-liste_blocs.append(Bloc("verb", "IS", "is", (19, 8)))
-liste_blocs.append(Bloc("verb", "IS", "is", (20, 12)))
-#test
-liste_blocs.append(Bloc("verb", "IS", "is", (18, 11)))
-
-liste_blocs.append(Bloc("verb", "IS", "is", (8, 13)))
-liste_blocs.append(Bloc("verb", "IS", "is", (14, 14)))
-liste_blocs.append(Bloc("verb", "IS", "is", (5, 8)))
-liste_blocs.append(Bloc("verb", "IS", "is", (28, 0)))
+liste_blocs.append(Bloc("verb", "is", (1, 0)))
+liste_blocs.append(Bloc("verb", "is", (17, 4)))
+liste_blocs.append(Bloc("verb", "is", (6, 7)))
+liste_blocs.append(Bloc("verb", "is", (19, 8)))
+liste_blocs.append(Bloc("verb", "is", (20, 12)))
+liste_blocs.append(Bloc("verb", "is", (8, 13)))
+liste_blocs.append(Bloc("verb", "is", (14, 14)))
+liste_blocs.append(Bloc("verb", "is", (5, 8)))
+liste_blocs.append(Bloc("verb", "is", (28, 0)))
 
 # YOU
-liste_blocs.append(Bloc("adj", "YOU", "you", (21, 12)))
+liste_blocs.append(Bloc("adj", "you", (21, 12)))
 # PUSH
-liste_blocs.append(Bloc("adj", "PUSH", "push", (19, 9)))
-liste_blocs.append(Bloc("adj", "PUSH", "push", (29, 0)))
+liste_blocs.append(Bloc("adj", "push", (19, 9)))
+liste_blocs.append(Bloc("adj", "push", (29, 0)))
 # STOP
-liste_blocs.append(Bloc("adj", "STOP", "stop", (15, 14)))
+liste_blocs.append(Bloc("adj", "stop", (15, 14)))
 # SHUT
-liste_blocs.append(Bloc("adj", "SHUT", "shut", (2, 0)))
+liste_blocs.append(Bloc("adj", "shut", (2, 0)))
 # HOT
-liste_blocs.append(Bloc("adj", "HOT", "hot", (20, 8)))
+liste_blocs.append(Bloc("adj", "hot", (20, 8)))
 # DEATH
-liste_blocs.append(Bloc("adj", "DEFEAT", "death", (18, 4)))
-liste_blocs.append(Bloc("adj", "DEFEAT", "death", (7, 7)))
+liste_blocs.append(Bloc("adj", "death", (18, 4)))
+liste_blocs.append(Bloc("adj", "death", (7, 7)))
 # MELT
-liste_blocs.append(Bloc("adj", "MELT", "melt", (5, 9)))
+liste_blocs.append(Bloc("adj", "melt", (5, 9)))
 # WEAK
-liste_blocs.append(Bloc("adj", "WEAK", "weak", (14, 11)))
+liste_blocs.append(Bloc("adj", "weak", (14, 11)))
 # BLUE
-liste_blocs.append(Bloc("adj", "BLUE", "blue", (22, 10)))
+liste_blocs.append(Bloc("adj", "blue", (22, 10)))
 # GREENER
-liste_blocs.append(Bloc("adj", "GREENER", "greener", (26, 4)))
+liste_blocs.append(Bloc("adj", "greener", (26, 4)))
 # OPEN
-liste_blocs.append(Bloc("adj", "OPEN", "open", (9, 13)))
+liste_blocs.append(Bloc("adj", "open", (9, 13)))
 
 
 

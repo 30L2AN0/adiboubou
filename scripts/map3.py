@@ -6,40 +6,40 @@ global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_o
 
 
 # ANNE
-liste_blocs.append(Bloc("noun", "ANNE", "anne", (10, 2)))
+liste_blocs.append(Bloc("noun", "anne", (10, 2)))
 # GRASS
-liste_blocs.append(Bloc("noun", "GRASS", "grass", (5, 4)))
-liste_blocs.append(Bloc("noun", "GRASS", "grass", (5, 8)))
+liste_blocs.append(Bloc("noun", "grass", (5, 4)))
+liste_blocs.append(Bloc("noun", "grass", (5, 8)))
 # GOOD CHAMPI
-liste_blocs.append(Bloc("noun", "  GOOD\nCHAMPI", "good champi", (14, 10)))
+liste_blocs.append(Bloc("noun", "good champi", (14, 10)))
 # BAD CHAMPI
-liste_blocs.append(Bloc("noun", "    BAD\nCHAMPI", "bad champi", (16, 2)))
+liste_blocs.append(Bloc("noun", "bad champi", (16, 2)))
 # WALL
-liste_blocs.append(Bloc("noun", "WALL", "wall", (25, 5)))
+liste_blocs.append(Bloc("noun", "wall", (25, 5)))
 
 
 
 # IS
-liste_blocs.append(Bloc("verb", "IS", "is", (10, 3)))
-liste_blocs.append(Bloc("verb", "IS", "is", (5, 5)))
-liste_blocs.append(Bloc("verb", "IS", "is", (25, 6)))
-liste_blocs.append(Bloc("verb", "IS", "is", (16, 3)))
-liste_blocs.append(Bloc("verb", "IS", "is", (6, 8)))
-liste_blocs.append(Bloc("verb", "IS", "is", (15, 11)))
+liste_blocs.append(Bloc("verb", "is", (10, 3)))
+liste_blocs.append(Bloc("verb", "is", (5, 5)))
+liste_blocs.append(Bloc("verb", "is", (25, 6)))
+liste_blocs.append(Bloc("verb", "is", (16, 3)))
+liste_blocs.append(Bloc("verb", "is", (6, 8)))
+liste_blocs.append(Bloc("verb", "is", (15, 11)))
 
 
 # YOU
-liste_blocs.append(Bloc("adj", "YOU", "you", (10, 4)))
+liste_blocs.append(Bloc("adj", "you", (10, 4)))
 # PUSH
-liste_blocs.append(Bloc("adj", "PUSH", "push", (5, 6)))
+liste_blocs.append(Bloc("adj", "push", (5, 6)))
 # STOP
-liste_blocs.append(Bloc("adj", "STOP", "stop", (25, 7)))
+liste_blocs.append(Bloc("adj", "stop", (25, 7)))
 # SHUT
-liste_blocs.append(Bloc("adj", "SHUT", "shut", (16, 4)))
+liste_blocs.append(Bloc("adj", "shut", (16, 4)))
 # OPEN
-liste_blocs.append(Bloc("adj", "OPEN", "open", (7, 8)))
+liste_blocs.append(Bloc("adj", "open", (7, 8)))
 # WIN
-liste_blocs.append(Bloc("adj", "WIN", "win", (15, 12)))
+liste_blocs.append(Bloc("adj", "win", (15, 12)))
 
 # Anne
 liste_obstacles.append(Obstacle("anne", (13, 6)))

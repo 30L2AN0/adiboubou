@@ -19,11 +19,10 @@ class Obstacle:
         return b
 
 class Bloc(Obstacle):
-    def __init__(self, type, nom_affiche, mot, position):
+    def __init__(self, type, mot, position):
         Obstacle.__init__(self, mot, position)
         self.type = type
-        self.nom_affiche = nom_affiche
 
     def copy(self):
-        a = Bloc(self.type, self.nom_affiche, self.mot, self.position)
+        a = Bloc(self.type, self.mot, self.position)
         return a

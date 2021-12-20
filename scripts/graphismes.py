@@ -83,51 +83,7 @@ def afficher_grille0(l1, l2):
     g = update_grille(l1, l2)
     liste_reg = nouvelles_regles(l1, im2)
     for bloc in l1:
-        if bloc.mot == "anne":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_anne)
-        elif bloc.mot == "wall":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_wall)
-        elif bloc.mot == "grass":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_grass)
-        elif bloc.mot == "bad champi":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_bad_champi)
-        elif bloc.mot == "good champi":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_good_champi)
-        elif bloc.mot == "auriane":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_aurianne)
-        elif bloc.mot == "door":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_door)
-        elif bloc.mot == "open":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_open)
-        elif bloc.mot == "hot":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_hot)
-        elif bloc.mot == "stop":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_stop)
-        elif bloc.mot == "text":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_text)
-        elif bloc.mot == "is":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_is)
-        elif bloc.mot == "death":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_death)
-        elif bloc.mot == "shut":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_shut)
-        elif bloc.mot == "melt":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_melt)
-        elif bloc.mot == "win":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_win)
-        elif bloc.mot == "greener":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_greener)
-        elif bloc.mot == "blue":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_blue)
-        elif bloc.mot == "push":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_push)
-        elif bloc.mot == "weak":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_weak)
-        elif bloc.mot == "you":
-            k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_you)
-        else:
-            k = C.create_text(bloc.position[0]*taille+taille//2, bloc.position[1]*taille+taille//2, text = bloc.nom_affiche, font = ("Verdana",7))
-        im1.append(k)
+        im1.append(ajout_affichage_bloc(bloc))
     for obstacles in l2:
         if obstacles.mot == "anne":
             if "anne is blue" in liste_regles:
@@ -207,11 +163,13 @@ def nouvelle_grille_is(l, obs, ind, im2):
 
 def afficher_grille(l1, l2, im1, im2, liste_obj, actualise):
     g = update_grille(l1, l2)
+    n = len(liste_obj[-2][0])
     if len(liste_obj) > 1:
         for i in range(len(l1)):
-            diff_pos = (actualise*(l1[i].position[0]-liste_obj[-2][0][i].position[0]),actualise*(l1[i].position[1]-liste_obj[-2][0][i].position[1]))
-            if diff_pos != (0,0):
-                C.move(im1[i], diff_pos[0]*taille, diff_pos[1]*taille)
+            if i < n:
+                diff_pos = (actualise*(l1[i].position[0]-liste_obj[-2][0][i].position[0]),actualise*(l1[i].position[1]-liste_obj[-2][0][i].position[1]))
+                if diff_pos != (0,0):
+                    C.move(im1[i], diff_pos[0]*taille, diff_pos[1]*taille)
         for j in range(len(l2)):
             diff_pos = (actualise*(l2[j].position[0]-liste_obj[-2][1][j].position[0]),actualise*(l2[j].position[1]-liste_obj[-2][1][j].position[1]))
             if diff_pos != (0,0):
@@ -223,11 +181,15 @@ def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
     if len(liste_obj) > 1:
         list_l1 = liste_obj[-2][0]
         list_l2 = liste_obj[-2][1]
-        l, im2 = nouvelles_regles(list_l1, im2)
+        list_l1, l, im2 = nouvelles_regles(list_l1, im2)
         for i in range(len(l1)):
-            diff_pos = (l1[i].position[0]-liste_obj[-2][0][i].position[0],l1[i].position[1]-liste_obj[-2][0][i].position[1])
-            if diff_pos != (0,0):
-                C.move(im1[i], -diff_pos[0]*taille, -diff_pos[1]*taille)
+            if i < len(list_l1):
+                diff_pos = (l1[i].position[0]-list_l1[i].position[0],l1[i].position[1]-list_l1[i].position[1])
+                if diff_pos != (0,0):
+                    C.move(im1[i], -diff_pos[0]*taille, -diff_pos[1]*taille)
+            else:
+                C.delete(im1[i])
+                del im1[i]
         for j in range(len(l2)):
             diff_pos = (l2[j].position[0]-liste_obj[-2][1][j].position[0],l2[j].position[1]-liste_obj[-2][1][j].position[1])
             if diff_pos != (0,0):
@@ -270,3 +232,50 @@ def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
                 else:
                     C.itemconfig(im2[j], image = image_door)
     return g, im1, im2
+
+def ajout_affichage_bloc(bloc):
+    if bloc.mot == "anne":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_anne)
+    elif bloc.mot == "wall":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_wall)
+    elif bloc.mot == "grass":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_grass)
+    elif bloc.mot == "bad champi":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_bad_champi)
+    elif bloc.mot == "good champi":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_good_champi)
+    elif bloc.mot == "auriane":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_aurianne)
+    elif bloc.mot == "door":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_door)
+    elif bloc.mot == "open":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_open)
+    elif bloc.mot == "hot":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_hot)
+    elif bloc.mot == "stop":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_stop)
+    elif bloc.mot == "text":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_text)
+    elif bloc.mot == "is":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_is)
+    elif bloc.mot == "death":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_death)
+    elif bloc.mot == "shut":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_shut)
+    elif bloc.mot == "melt":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_melt)
+    elif bloc.mot == "win":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_win)
+    elif bloc.mot == "greener":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_greener)
+    elif bloc.mot == "blue":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_blue)
+    elif bloc.mot == "push":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_push)
+    elif bloc.mot == "weak":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_weak)
+    elif bloc.mot == "you":
+        k = C.create_image(bloc.position[0]*taille+1, bloc.position[1]*taille+1, anchor = NW, image = text_you)
+    else:
+        k = C.create_text(bloc.position[0]*taille+taille//2, bloc.position[1]*taille+taille//2, text = bloc.mot, font = ("Verdana",7))
+    return k
