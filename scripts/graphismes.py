@@ -11,7 +11,7 @@ from regles import *
 exec(open("regles.py").read())
 
 top = Tk()
-C = Canvas(top,height = 680, width = 1200)
+C = Canvas(top, height = hauteur, width = largeur)
 
 C.pack()
 top.title("Anne is stone")
@@ -21,10 +21,7 @@ normal_texts_path = "../texts/normal/"
 inverted_texts_path = "../texts/inverted/"
 backgrounds_path = "../backgrounds/"
 
-# images_champi_background = ImageTk.PhotoImage(Image.open(images_path+"champi_background4.jpg").resize((1200, 680), Image.ANTIALIAS), master = top)
-# background_fall_brown = ImageTk.PhotoImage(Image.open(backgrounds_path+"brown_from_fall.png").resize((1200, 680), Image.ANTIALIAS), master = top)
-# fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"fall-baba_is_you.png").resize((1200, 680), Image.ANTIALIAS), master = top)
-clipped_fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"clipped_fall-baba_is_you.png").resize((1200, 680), Image.ANTIALIAS), master = top)
+clipped_fall_background = ImageTk.PhotoImage(Image.open(backgrounds_path+"clipped_fall-baba_is_you.png").resize((largeur, hauteur), Image.ANTIALIAS), master = top)
 C.create_image(0, 0, anchor = NW, image = clipped_fall_background)
 
 image_anne = ImageTk.PhotoImage(Image.open(images_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -42,8 +39,8 @@ image_wall = ImageTk.PhotoImage(Image.open(images_path+"wall.png").resize((taill
 image_blue_wall = ImageTk.PhotoImage(Image.open(images_path+"blue_wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_door = ImageTk.PhotoImage(Image.open(images_path+"door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 image_blue_door = ImageTk.PhotoImage(Image.open(images_path+"blue_door.png").resize((taille,taille), Image.ANTIALIAS), master = top)
-image_DUH = ImageTk.PhotoImage(Image.open(images_path+"DUH.png").resize((1200,680), Image.ANTIALIAS), master = top)
-image_victory = ImageTk.PhotoImage(Image.open(images_path+"victory.png").resize((1200,680), Image.ANTIALIAS), master = top)
+image_DUH = ImageTk.PhotoImage(Image.open(images_path+"DUH.png").resize((largeur, hauteur), Image.ANTIALIAS), master = top)
+image_victory = ImageTk.PhotoImage(Image.open(images_path+"victory.png").resize((largeur, hauteur), Image.ANTIALIAS), master = top)
 
 text_anne = ImageTk.PhotoImage(Image.open(normal_texts_path+"anne.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 text_wall = ImageTk.PhotoImage(Image.open(normal_texts_path+"wall.png").resize((taille,taille), Image.ANTIALIAS), master = top)
@@ -69,7 +66,7 @@ text_weak = ImageTk.PhotoImage(Image.open(inverted_texts_path+"weak.png").resize
 text_you = ImageTk.PhotoImage(Image.open(inverted_texts_path+"you.png").resize((taille,taille), Image.ANTIALIAS), master = top)
 
 def update_grille(l1,l2):
-    nouv_grille = [[None for j in range(680//taille)] for i in range(1200//taille)]
+    nouv_grille = [[None for j in range(hauteur//taille)] for i in range(largeur//taille)]
     for i in range(len(l1)):
         nouv_grille[l1[i].position[0]][l1[i].position[1]] = ("bloc", i)
     for j in range(len(l2)):
@@ -77,7 +74,7 @@ def update_grille(l1,l2):
     return nouv_grille
 
 def afficher_grille0(l1, l2):
-    global liste_regles
+    global liste_regles, liste_bleus
     im1 = []
     im2 = []
     g = update_grille(l1, l2)
@@ -87,6 +84,7 @@ def afficher_grille0(l1, l2):
     for obstacles in l2:
         if obstacles.mot == "anne":
             if "anne is blue" in liste_regles:
+                liste_bleus[0][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_anne)
             elif "anne is goodchampi" in liste_regles:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_good_champi_anne)
@@ -94,70 +92,96 @@ def afficher_grille0(l1, l2):
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_anne)
         if obstacles.mot == "auriane":
             if "auriane is blue" in liste_regles:
+                liste_bleus[1][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_auriane)
             else:
                  k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_auriane)
         if obstacles.mot == "grass":
             if "grass is blue" in liste_regles:
+                liste_bleus[5][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_grass)
             else:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_grass)
         if obstacles.mot == "wall":
             if "wall is blue" in liste_regles:
+                liste_bleus[2][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_wall)
             else:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_wall)
         if obstacles.mot == "bad champi":
             if "bad champi is blue" in liste_regles:
+                liste_bleus[3][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_bad_champi)
             else:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_bad_champi)
         if obstacles.mot == "good champi":
             if "good champi is blue" in liste_regles:
+                liste_bleus[4][1] = 0
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_good_champi)
             else:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_good_champi)
         if obstacles.mot == "door":
             if "door is blue" in liste_regles:
-                    k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_door)
+                liste_bleus[6][1] = 0
+                k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_blue_door)
             else:
                 k = C.create_image(obstacles.position[0]*taille+1, obstacles.position[1]*taille+1, anchor = NW, image = image_door)
         im2.append(k)
     return g, im1, im2
 
 def nouvelle_grille_is(l, obs, ind, im2):
+    global liste_liste_objets, liste_bleus
     if obs.mot == "anne":
         if "anne is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_anne)
+            if liste_bleus[0][1] == None or len(liste_liste_objets) >= liste_bleus[0][1]:
+                C.itemconfig(im2[ind], image = image_blue_anne)
+                liste_bleus[0][1] = len(liste_liste_objets)
         elif "anne is goodchampi" in l:
             C.itemconfig(im2[ind], image = image_good_champi_anne)
         else:
             C.itemconfig(im2[ind], image = image_anne)
     if obs.mot == "auriane":
         if "auriane is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_auriane)
+            if liste_bleus[1][1] == None or len(liste_liste_objets) >= liste_bleus[1][1]:
+                C.itemconfig(im2[ind], image = image_blue_auriane)
+                liste_bleus[1][1] = len(liste_liste_objets)
         else:
             C.itemconfig(im2[ind], image = image_auriane)
     if obs.mot == "grass":
         if "grass is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_grass)
+            if liste_bleus[5][1] == None or len(liste_liste_objets) >= liste_bleus[5][1]:
+                C.itemconfig(im2[ind], image = image_blue_grass)
+                liste_bleus[5][1] = len(liste_liste_objets)
         else:
             C.itemconfig(im2[ind], image = image_grass)
     if obs.mot == "wall":
         if "wall is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_wall)
+            if liste_bleus[2][1] == None or len(liste_liste_objets) >= liste_bleus[2][1]:
+                C.itemconfig(im2[ind], image = image_blue_wall)
+                liste_bleus[2][1] = len(liste_liste_objets)
         else:
             C.itemconfig(im2[ind], image = image_wall)
     if obs.mot == "bad champi":
         if "bad champi is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_bad_champi)
+            if liste_bleus[3][1] == None or len(liste_liste_objets) >= liste_bleus[3][1]:
+                C.itemconfig(im2[ind], image = image_blue_bad_champi)
+                liste_bleus[3][1] = len(liste_liste_objets)
         else:
             C.itemconfig(im2[ind], image = image_bad_champi)
     if obs.mot == "good champi":
         if "good champi is blue" in l:
-            C.itemconfig(im2[ind], image = image_blue_good_champi)
+            if liste_bleus[4][1] == None or len(liste_liste_objets) >= liste_bleus[4][1]:
+                C.itemconfig(im2[ind], image = image_blue_good_champi)
+                liste_bleus[4][1] = len(liste_liste_objets)
         else:
             C.itemconfig(im2[ind], image = image_good_champi)
+    if obs.mot == "door":
+        if "door is blue" in l:
+            if liste_bleus[6][1] == None or len(liste_liste_objets) >= liste_bleus[6][1]:
+                C.itemconfig(im2[ind], image = image_blue_door)
+                liste_bleus[6][1] = len(liste_liste_objets)
+        else:
+            C.itemconfig(im2[ind], image = image_door)
     return im2
 
 
@@ -177,6 +201,7 @@ def afficher_grille(l1, l2, im1, im2, liste_obj, actualise):
     return g, im1, im2
 
 def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
+    global liste_bleus
     g = update_grille(l1, l2)
     if len(liste_obj) > 1:
         list_l1 = liste_obj[-2][0]
@@ -189,46 +214,72 @@ def afficher_grille_rewind(l1, l2, im1, im2, liste_obj):
                     C.move(im1[i], -diff_pos[0]*taille, -diff_pos[1]*taille)
             else:
                 C.delete(im1[i])
-                del im1[i]
+        del im1[len(list_l1):]
         for j in range(len(l2)):
             diff_pos = (l2[j].position[0]-liste_obj[-2][1][j].position[0],l2[j].position[1]-liste_obj[-2][1][j].position[1])
             if diff_pos != (0,0):
                 C.move(im2[j], -diff_pos[0]*taille, -diff_pos[1]*taille)
             if list_l2[j].mot == "anne":
-                if "anne is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_anne)
+                if liste_bleus[0][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[0][1]:
+                        C.itemconfig(im2[j], image = image_blue_anne)
+                    if len(liste_obj)-1 == liste_bleus[0][1]:
+                        liste_bleus[0][1] = None
+                        C.itemconfig(im2[j], image = image_auriane)
                 elif "anne is goodchampi" in l:
                     C.itemconfig(im2[j], image = image_good_champi_anne)
                 else:
                     C.itemconfig(im2[j], image = image_anne)
             if list_l2[j].mot == "auriane":
-                if "auriane is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_auriane)
+                if liste_bleus[1][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[1][1]:
+                        C.itemconfig(im2[j], image = image_blue_auriane)
+                    if len(liste_obj)-1 == liste_bleus[1][1]:
+                        liste_bleus[1][1] = None
+                        C.itemconfig(im2[j], image = image_auriane)
                 else:
                     C.itemconfig(im2[j], image = image_auriane)
             if list_l2[j].mot == "grass":
-                if "grass is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_grass)
+                if liste_bleus[5][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[5][1]:
+                        C.itemconfig(im2[j], image = image_blue_grass)
+                    if len(liste_obj)-1 == liste_bleus[5][1]:
+                        liste_bleus[5][1] = None
+                        C.itemconfig(im2[j], image = image_grass)
                 else:
                     C.itemconfig(im2[j], image = image_grass)
             if list_l2[j].mot == "wall":
-                if "wall is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_wall)
+                if liste_bleus[2][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[2][1]:
+                        C.itemconfig(im2[j], image = image_blue_wall)
+                    if len(liste_obj)-1 == liste_bleus[2][1]:
+                        liste_bleus[2][1] = None
+                        C.itemconfig(im2[j], image = image_wall)
                 else:
                     C.itemconfig(im2[j], image = image_wall)
             if list_l2[j].mot == "bad champi":
-                if "bad champi is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_bad_champi)
+                if liste_bleus[2][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[3][1]:
+                        C.itemconfig(im2[j], image = image_blue_bad_champi)
+                    if len(liste_obj)-1 == liste_bleus[3][1]:
+                        liste_bleus[3][1] = None
+                        C.itemconfig(im2[j], image = image_bad_champi)
                 else:
                     C.itemconfig(im2[j], image = image_bad_champi)
             if list_l2[j].mot == "good champi":
-                if "good champi is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_good_champi)
+                if liste_bleus[4][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[4][1]:
+                        C.itemconfig(im2[j], image = image_blue_good_champi)
+                    if len(liste_obj)-1 == liste_bleus[4][1]:
+                        C.itemconfig(im2[j], image = image_good_champi)
                 else:
                     C.itemconfig(im2[j], image = image_good_champi)
             if list_l2[j].mot == "door":
-                if "door is blue" in l:
-                    C.itemconfig(im2[j], image = image_blue_door)
+                if liste_bleus[6][1] != None:
+                    if len(liste_obj)-1 > liste_bleus[6][1]:
+                        C.itemconfig(im2[j], image = image_blue_door)
+                    if len(liste_obj)-1 == liste_bleus[6][1]:
+                        C.itemconfig(im2[j], image = image_door)
                 else:
                     C.itemconfig(im2[j], image = image_door)
     return g, im1, im2

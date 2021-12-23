@@ -36,7 +36,7 @@ liste_obstacles.append(Obstacle("grass", (1,2)))
 liste_obstacles.append(Obstacle("grass", (1,3)))
 
 
-for j in range(17):
+for j in range(hauteur//taille):
     for i in range(22-j//2, 25-j//2):
         liste_obstacles.append(Obstacle("grass", (i,j)))
 

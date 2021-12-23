@@ -1,12 +1,12 @@
-#programmer sink, push, move, et régler problème couleur
+#programmer pull, move, et régler problème couleur
 
 from __init__ import *
 exec(open("__init__.py").read())
 
-global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, liste_noun, liste_adj
+global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, liste_noun, liste_adj, liste_bleus
 
 liste_noun = ["auriane", "anne", "good champi", "bad champi", "wall", "grass", "door"]
-liste_adj = ["open", "shut", "greener", "stop", "push", "blue"]
+liste_adj = ["open", "shut", "greener", "stop", "push", "blue", "sink", "melt", "hot"]
 
 def distance(X,Y):
     return abs(X[0]-Y[0])+2*abs(X[1]-Y[1])
@@ -85,6 +85,7 @@ def nouvelles_regles(l, im2):
     l, liste_obstacles, im2 = appliquer_nouvelles_regles(nouvelle_liste_regles, l, liste_obstacles, im2)
     return l, nouvelle_liste_regles, im2
 
+
 def appliquer_nouvelles_regles(l, l1, l2, im2):
     global images_blocs
     if len(im2) > 0:
@@ -117,9 +118,9 @@ def pushable(ob, l):
             return True
         if regle.startswith(ob.mot) and regle.endswith("is you"):
             return True
-    #ajouter d'autres conditions plus tard
     return False
 
+# DEATH
 def prochain_bloc_mort(k, l, l2):
     if k != None:
         element, indice = k
@@ -127,10 +128,14 @@ def prochain_bloc_mort(k, l, l2):
             for condition in l:
                 if condition.startswith(l2[indice].mot) and condition.endswith("is death"):
                     return True
+        if element == "bloc":
+            if "text is death" in l:
+                return True
     return False
 
+# MELT/HOT
 def condition_melt_hot(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
+    if i1+t[0] < largeur//taille and i1+t[0] >= 0 and i2+t[1] < hauteur//taille and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l2[g[i1][i2][1]]
@@ -139,18 +144,53 @@ def condition_melt_hot(g, l, l2, i1, i2, t):
                     for regle2 in l:
                         if regle1.startswith(obs1.mot) and regle1.endswith("is hot") and regle2.startswith(obs2.mot) and regle2.endswith("is melt") or regle1.startswith(obs2.mot) and regle1.endswith("is hot") and regle2.startswith(obs1.mot) and regle2.endswith("is melt"):
                             return True
+            if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                if "text is hot" in l:
+                    for regle in l:
+                        if regle.startswith(obs2.mot) and regle.endswith("is melt"):
+                            return True
+                if "text is melt" in l:
+                    for regle in l:
+                        if regle.startswith(obs2.mot) and regle.endswith("is hot"):
+                            return True
+
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "bloc":
+                obs1 = l2[g[i1][i2][1]]
+                if "text is hot" in l:
+                    for regle in l:
+                        if regle.startswith(obs1.mot) and regle.endswith("is melt"):
+                            return True
+                if "text is melt" in l:
+                    for regle in l:
+                        if regle.startswith(obs1.mot) and regle.endswith("is hot"):
+                            return True
+            if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "bloc":
+                if "text is melt" in l and "text is hot" in l:
+                    return True
     return False
 
-def indice_melt_hot(g, l, l2, i1, i2, t):
-    obs1 = l2[g[i1][i2][1]]
-    obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
-    for regle1 in l:
-        for regle2 in l:
-            if regle1.startswith(obs1.mot) and regle1.endswith("is hot") and regle2.startswith(obs2.mot) and regle2.endswith("is melt"):
-                return i1+t[0], i2+t[1]
+def indice_melt_hot(g, l, l1, l2, i1, i2, t):
+    if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
+        obs1 = l2[g[i1][i2][1]]
+        obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+        for regle1 in l:
+            for regle2 in l:
+                if regle1.startswith(obs1.mot) and regle1.endswith("is hot") and regle2.startswith(obs2.mot) and regle2.endswith("is melt"):
+                    return i1+t[0], i2+t[1]
+    if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
+        obs1 = l1[g[i1][i2][1]]
+        obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+        if "text is hot" in l:
+            return i1+t[0], i2+t[1]
+    if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "bloc":
+        obs1 = l2[g[i1][i2][1]]
+        obs2 = l1[g[i1+t[0]][i2+t[1]][1]]
+        if "text is melt" in l:
+            return i1+t[0], i2+t[1]
     return i1, i2
 
-
+# WIN
 def prochain_bloc_win(k, l, l2):
     if k != None:
         element, indice = k
@@ -158,10 +198,14 @@ def prochain_bloc_win(k, l, l2):
             for condition in l:
                 if condition.startswith(l2[indice].mot) and condition.endswith("is win"):
                     return True
+        if element == "bloc":
+            if "text is win" in l:
+                    return True
     return False
 
+# WEAK
 def condition_weak(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
+    if i1+t[0] < largeur//taille and i1+t[0] >= 0 and i2+t[1] < hauteur//taille and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l2[g[i1][i2][1]]
@@ -177,20 +221,8 @@ def condition_weak(g, l, l2, i1, i2, t):
                     return True
     return False
 
-def condition_open_shut(g, l, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
-        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
-            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
-                obs1 = l2[g[i1][i2][1]]
-                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
-                for regle1 in l:
-                    for regle2 in l:
-                        if regle1.startswith(obs1.mot) and regle1.endswith("is shut") and regle2.startswith(obs2.mot) and regle2.endswith("is open") or regle1.startswith(obs2.mot) and regle1.endswith("is shut") and regle2.startswith(obs1.mot) and regle2.endswith("is open"):
-                            return True
-    return False
-
 def condition_weak_text(g, l, l1, l2, i1, i2, t):
-    if i1+t[0] < 30 and i1+t[0] >= 0 and i2+t[1] < 17 and i2+t[1] >= 0:
+    if i1+t[0] < largeur//taille and i1+t[0] >= 0 and i2+t[1] < hauteur//taille and i2+t[1] >= 0:
         if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
             if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
                 obs1 = l1[g[i1][i2][1]]
@@ -206,6 +238,44 @@ def condition_weak_text(g, l, l1, l2, i1, i2, t):
                         return True
     return False
 
+# OPEN/SHUT
+def condition_open_shut(g, l, l2, i1, i2, t):
+    if i1+t[0] < largeur//taille and i1+t[0] >= 0 and i2+t[1] < hauteur//taille and i2+t[1] >= 0:
+        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs1 = l2[g[i1][i2][1]]
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                for regle1 in l:
+                    for regle2 in l:
+                        if regle1.startswith(obs1.mot) and regle1.endswith("is shut") and regle2.startswith(obs2.mot) and regle2.endswith("is open") or regle1.startswith(obs2.mot) and regle1.endswith("is shut") and regle2.startswith(obs1.mot) and regle2.endswith("is open"):
+                            return True
+    return False
+
+# SINK
+def condition_sink(g, l, l2, i1, i2, t):
+    if i1+t[0] < largeur//taille and i1+t[0] >= 0 and i2+t[1] < hauteur//taille and i2+t[1] >= 0:
+        if g[i1][i2] != None and g[i1+t[0]][i2+t[1]] != None:
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs1 = l2[g[i1][i2][1]]
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                for regle in l:
+                        if (regle.startswith(obs1.mot) or regle.startswith(obs2.mot)) and regle.endswith("is sink"):
+                            return True
+            if g[i1][i2][0] == "bloc" and g[i1+t[0]][i2+t[1]][0] == "obs":
+                obs2 = l2[g[i1+t[0]][i2+t[1]][1]]
+                #on ne peut pas être le texte donc moins de cas à traiter
+                for regle in l:
+                    if regle.startswith(obs2.mot) and regle.endswith("is sink"):
+                        return True
+            if g[i1][i2][0] == "obs" and g[i1+t[0]][i2+t[1]][0] == "bloc":
+                obs1 = l2[g[i1][i2][1]]
+                if "text is sink" in l:
+                    return True
+                for regle in l:
+                    if regle.startswith(obs1.mot) and regle.endswith("is sink"):
+                        return True
+    return False
+
 def check_deplacement(t, l, l1, l2, g, liste_obj):
     actu = False
     liste_you = []
@@ -215,7 +285,7 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
         if regle.endswith("is you"):
             liste_you.append(regle[:-7])
     for obstacle in range(len(l2)):
-        if l2[obstacle].mot in liste_you and l2[obstacle].position[0]+t[0] < 30 and l2[obstacle].position[0]+t[0] >= 0 and l2[obstacle].position[1]+t[1] < 17 and l2[obstacle].position[1]+t[1] >= 0:
+        if l2[obstacle].mot in liste_you and l2[obstacle].position[0]+t[0] < largeur//taille and l2[obstacle].position[0]+t[0] >= 0 and l2[obstacle].position[1]+t[1] < hauteur//taille and l2[obstacle].position[1]+t[1] >= 0:
             if g[l2[obstacle].position[0]+t[0]][l2[obstacle].position[1]+t[1]] == None and not deja_bouge_obs[obstacle]:
                 deja_bouge_obs[obstacle] = True
                 l2[obstacle].set((l2[obstacle].position[0]+t[0], l2[obstacle].position[1]+t[1]))
@@ -230,13 +300,13 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
             else:
                 ind1, ind2 = l2[obstacle].position
                 liste_apres = []
-                while ind1 < 30 and ind1 >= 0 and ind2 < 17 and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t):
+                while ind1 < largeur//taille and ind1 >= 0 and ind2 < hauteur//taille and ind2 >= 0 and g[ind1][ind2] != None and not condition_open_shut(g, l, l2, ind1, ind2, t) and not condition_weak(g, l, l2, ind1, ind2, t) and not condition_melt_hot(g, l, l2, ind1, ind2, t) and not condition_weak_text(g, l, l1, l2, ind1, ind2, t) and not condition_sink(g, l, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
                     ind1 += t[0]
                     ind2 += t[1]
-                if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t) or condition_weak_text(g, l, l1, l2, ind1, ind2, t):
+                if condition_open_shut(g, l, l2, ind1, ind2, t) or condition_weak(g, l, l2, ind1, ind2, t) or condition_melt_hot(g, l, l2, ind1, ind2, t) or condition_weak_text(g, l, l1, l2, ind1, ind2, t) or condition_sink(g, l, l2, ind1, ind2, t):
                     liste_apres.append((ind1,ind2))
-                if ind1 < 30 and ind1 >= 0 and ind2 < 17 and ind2 >= 0:
+                if ind1 < largeur//taille and ind1 >= 0 and ind2 < hauteur//taille and ind2 >= 0:
                     poussable = True
                     for tup_indice in liste_apres:
                         ind1, ind2 = tup_indice
@@ -257,16 +327,39 @@ def check_deplacement(t, l, l1, l2, g, liste_obj):
                                     elif condition_weak(g, l, l2, ind1, ind2, t):
                                         l2[g[ind1][ind2][1]].position = (-1,-1)
                                     elif condition_melt_hot(g, l, l2, ind1, ind2, t):
-                                        a1, a2 = indice_melt_hot(g, l, l2, ind1, ind2, t)
-                                        l2[g[a1][a2][1]].position = (-1,-1)
+                                        a1, a2 = indice_melt_hot(g, l, l1, l2, ind1, ind2, t)
+                                        if g[a1][a2][0] == "obs":
+                                            l2[g[a1][a2][1]].position = (-1,-1)
+                                        else:
+                                            l1[g[a1][a2][1]].position = (-1,-1)
                                         if a1 != ind1 or a2 != ind2:
                                             l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
+                                    elif condition_sink(g, l, l2, ind1, ind2, t):
+                                        l2[g[ind1][ind2][1]].position = (-1,-1)
+                                        if g[ind1+t[0]][ind2+t[1]][0] == "obs":
+                                            l2[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
+                                        else:
+                                            l1[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
                                     else:
                                         l2[element[1]].set((l2[element[1]].position[0]+t[0],l2[element[1]].position[1]+t[1]))
                                         deja_bouge_obs[element[1]] = True
                                 if element[0] == "bloc" and not deja_bouge_bloc[element[1]]:
                                     if condition_weak_text(g, l, l1, l2, ind1, ind2, t):
                                         l1[g[ind1][ind2][1]].position = (-1,-1)
+                                    elif condition_melt_hot(g, l, l2, ind1, ind2, t):
+                                        a1, a2 = indice_melt_hot(g, l, l1, l2, ind1, ind2, t)
+                                        if g[a1][a2][0] == "obs":
+                                            l2[g[a1][a2][1]].position = (-1,-1)
+                                        else:
+                                            l1[g[a1][a2][1]].position = (-1,-1)
+                                        if a1 != ind1 or a2 != ind2:
+                                            l1[element[1]].set((l1[element[1]].position[0]+t[0],l1[element[1]].position[1]+t[1]))
+                                    elif condition_sink(g, l, l2, ind1, ind2, t):
+                                        l1[g[ind1][ind2][1]].position = (-1,-1)
+                                        if g[ind1+t[0]][ind2+t[1]][0] == "obs":
+                                            l2[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
+                                        else:
+                                            l1[g[ind1+t[0]][ind2+t[1]][1]].position = (-1,-1)
                                     else:
                                         l1[element[1]].set((l1[element[1]].position[0]+t[0],l1[element[1]].position[1]+t[1]))
                                         deja_bouge_bloc[element[1]] = True

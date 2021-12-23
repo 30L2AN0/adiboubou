@@ -1,21 +1,15 @@
-#and compliqué à ajouter
-#text compliqué à ajouter
-#faire l'application des nouvelles regles
-
-
 from __init__ import *
 
-global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, images_blocs, images_obstacles, images_autres
+global liste_obstacles, liste_blocs, liste_regles, taille, grille, liste_liste_objets, images_blocs, images_obstacles, images_autres, liste_bleus
 
 from regles import *
 exec(open("regles.py").read())
 from rewind import *
 exec(open("rewind.py").read())
-exec(open("rewind.py").read())
 exec(open("graphismes.py").read())
 
 #on met à jour les listes en fonction de la map choisie
-exec(open("map3.py").read())
+exec(open("map2.py").read())
 
 liste_liste_objets = [(copy_blocs(liste_blocs), copy_obstacles(liste_obstacles))]
 grille, images_blocs, images_obstacles = afficher_grille0(liste_blocs, liste_obstacles)
@@ -23,6 +17,9 @@ liste_blocs, liste_regles, images_obstacles = nouvelles_regles(liste_blocs, imag
 images_autres = []
 for i in range(len(liste_obstacles)):
     images_obstacles = nouvelle_grille_is(liste_regles, liste_obstacles[i], i, images_obstacles)
+
+#pour savoir quand ils sont devenus bleus
+liste_bleus = [["anne", None], ["auriane", None], ["wall", None], ["bad champi", None], ["good champi", None], ["grass", None], ["door", None]]
 
 
 def gauche(event):

@@ -27,7 +27,6 @@ liste_blocs.append(Bloc("verb", "is", (16, 3)))
 liste_blocs.append(Bloc("verb", "is", (6, 8)))
 liste_blocs.append(Bloc("verb", "is", (15, 11)))
 
-
 # YOU
 liste_blocs.append(Bloc("adj", "you", (10, 4)))
 # PUSH
